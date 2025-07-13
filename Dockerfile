@@ -12,11 +12,11 @@ RUN apt-get update && apt-get install -y \
     npm \
     && rm -rf /var/lib/apt/lists/*
 
-# Download and install Tomcat 10.1 (latest available version)
-RUN wget https://downloads.apache.org/tomcat/tomcat-10/v10.1.20/bin/apache-tomcat-10.1.20.tar.gz \
-    && tar -xzf apache-tomcat-10.1.20.tar.gz \
-    && mv apache-tomcat-10.1.20 /opt/tomcat \
-    && rm apache-tomcat-10.1.20.tar.gz
+# Download and install Tomcat 10.1.43 (latest as of now)
+RUN wget https://downloads.apache.org/tomcat/tomcat-10/v10.1.43/bin/apache-tomcat-10.1.43.tar.gz \
+    && tar -xzf apache-tomcat-10.1.43.tar.gz \
+    && mv apache-tomcat-10.1.43 /opt/tomcat \
+    && rm apache-tomcat-10.1.43.tar.gz
 
 # Copy application files
 COPY src/ ./src/
