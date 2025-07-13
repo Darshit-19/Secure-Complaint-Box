@@ -12,7 +12,6 @@
 
 # Build artifacts
 build/
-target/
 out/
 
 # Node.js
