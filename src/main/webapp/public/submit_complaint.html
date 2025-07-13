@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<title>Submit Complaint</title>
+
+<!-- Tailwind CSS -->
+<link rel="stylesheet" href="/SecureComplaintBox/public/css/tailwind.css">
+<script defer src="/SecureComplaintBox/public/js/submit.js"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-indigo-100 flex flex-col min-h-screen">
+    <!-- Header: full width -->
+    <header class="bg-white shadow-lg border-b border-indigo-200 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-2">
+                <span class="text-xl font-bold text-indigo-700 flex items-center gap-2">
+                    <i class="fas fa-lock text-indigo-600"></i>
+                    Secure Complaint Box
+                </span>
+            </div>
+        </div>
+    </header>
+    <!-- Main content: centered form -->
+    <main class="flex-grow flex items-center justify-center p-6">
+        <div class="w-full max-w-xl bg-white border border-gray-300 shadow-xl rounded-2xl p-8 space-y-6 animate-fade-in-down">
+
+		<h1 class="text-3xl font-bold text-center text-indigo-700">Submit
+			a Complaint</h1>
+
+		<form id="complaintForm" class="space-y-5 text-gray-700">
+
+			<!-- Organization ID -->
+			<div>
+				<label class="block font-semibold mb-1">Organization ID</label>
+				<input name="org_id" type="text" required placeholder="Enter your organization ID" class="w-full border border-gray-400 bg-gray-50 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+			</div>
+			<!-- Complaint Type -->
+			<div>
+				<label class="block font-semibold mb-1">Complaint Type</label> 
+				<select
+					name="type" required
+					class="w-full border border-gray-400 bg-gray-50 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+					<option value="">-- Select Complaint Type --</option>
+					<option>Human Resources</option>
+					<option>Information Technology</option>
+					<option>Facilities & Infrastructure</option>
+					<option>Ethics & Compliance</option>
+					<option>Work Environment</option>
+					<option>Others</option>
+				</select>
+
+			</div>
+
+			<!-- Description -->
+			<div>
+				<label class="block font-semibold mb-1">Description</label>
+				<textarea name="description" required rows="5"
+					placeholder="Describe your complaint clearly..."
+					class="w-full border border-gray-400 bg-gray-50 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"></textarea>
+			</div>
+
+			<!-- Contact Info -->
+			<div>
+				<label class="block font-semibold mb-1">Contact Info <span
+					class="text-sm text-gray-400">(optional)</span>
+				</label> <input name="contact_info" type="text"
+					placeholder="Email or phone (optional)"
+					class="w-full border border-gray-400 bg-gray-50 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+			</div>
+
+			<!-- Submit Button -->
+			<button type="submit"
+				class="w-full py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition duration-300">
+				Submit Complaint</button>
+
+			<!-- Toast Message -->
+			<p id="toast" class="hidden text-center font-medium mt-2"></p>
+		</form>
+
+
+	</div>
+    </main>
+    <!-- Footer: full width -->
+    <footer class="bg-gray-900 text-white py-6 mt-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400 text-base">© 2024 Secure Complaint Box. All rights reserved.</p>
+        </div>
+    </footer>
+
+	<!-- Animation Style -->
+	<style>
+.animate-fade-in-down {
+	animation: fadeInDown 0.5s ease-out both;
+}
+
+@keyframes fadeInDown {from { opacity:0;
+	transform: translateY(-20px);
+}
+
+to {
+	opacity: 1;
+	transform: translateY(0);
+}
+}
+</style>
+</body>
+</html>

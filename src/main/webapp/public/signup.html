@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Create Organization - Secure Complaint Box</title>
+    <link rel="stylesheet" href="/SecureComplaintBox/public/css/tailwind.css">
+    <style>
+        .input-field {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+        .input-field:focus {
+            background-color: white;
+            border-color: #818cf8;
+            box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+        }
+        .header-container {
+            height: 64px; /* Fixed header height */
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-indigo-100">
+    <!-- Header -->
+    <header class="bg-white shadow-lg border-b border-indigo-200 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <span class="text-xl font-bold text-indigo-700 flex items-center gap-2">
+                    <i class="fas fa-lock text-indigo-600"></i>
+                    Secure Complaint Box
+                </span>
+                <a href="/SecureComplaintBox/public/admin_login.html"
+                   class="text-indigo-600 font-medium hover:underline hover:text-indigo-800 transition">
+                    Admin Login
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex justify-center items-center px-4 py-8">
+        <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-8 border border-gray-200">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Create Your Organization</h2>
+                <p class="text-gray-600 text-base">Set up your secure complaint portal in minutes</p>
+            </div>
+            <form id="signupForm" action="/SecureComplaintBox/registerOrg" method="post" class="space-y-6">
+                <div>
+                    <label class="block font-medium text-gray-700 mb-2 text-base">Organization Name</label>
+                    <input name="org_name" type="text" required placeholder="e.g. TechCorp Solutions" 
+                           class="input-field w-full rounded-lg px-4 py-3 text-base focus:outline-none">
+                </div>
+                <div>
+                    <label class="block font-medium text-gray-700 mb-2 text-base">Admin Email</label>
+                    <input name="admin_email" type="email" required placeholder="admin@yourcompany.com" 
+                           class="input-field w-full rounded-lg px-4 py-3 text-base focus:outline-none">
+                </div>
+                <div>
+                    <label class="block font-medium text-gray-700 mb-2 text-base">Admin Password</label>
+                    <input name="password" type="password" required placeholder="Enter at least 6 characters" 
+                           class="input-field w-full rounded-lg px-4 py-3 text-base focus:outline-none">
+                </div>
+                <button type="submit" class="w-full py-3.5 bg-indigo-600 text-white rounded-lg font-semibold text-base hover:bg-indigo-700 transition-colors">
+                    Create Organization
+                </button>
+                <div id="errorMessage" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-base text-center">
+                    <span id="errorText"></span>
+                </div>
+            </form>
+            <div class="text-center mt-6">
+                <a href="/SecureComplaintBox/public/index.html" class="text-indigo-600 hover:text-indigo-800 font-medium text-base">← Back to Home</a>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-gray-900 text-white py-6 mt-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400 text-base">© 2024 Secure Complaint Box. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const error = urlParams.get('error');
+            if (error) {
+                const errorDiv = document.getElementById('errorMessage');
+                const errorText = document.getElementById('errorText');
+                errorText.textContent = decodeURIComponent(error);
+                errorDiv.classList.remove('hidden');
+            }
+        });
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            const form = e.target;
+            const submitButton = form.querySelector('button[type="submit"]');
+            const errorDiv = document.getElementById('errorMessage');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Creating...';
+            errorDiv.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>

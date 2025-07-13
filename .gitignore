@@ -1,0 +1,44 @@
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# Build directories
+build/
+target/
+out/
+
+# IDE files
+.settings/
+.metadata/
+.project
+.classpath
+.vscode/
+.idea/
+
+# Sensitive configuration files (like .env in Node.js)
+src/main/resources/application.properties
+src/main/resources/application-prod.properties
+src/main/resources/application-dev.properties
+# Allow example files
+!src/main/resources/application.properties.example
+
+# Environment files
+.env
+.env.local
+.env.production
+.env.development
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node.js (for Tailwind CSS)
+node_modules/
+package-lock.json
+
+# Temporary files
+*.tmp
+*.temp 

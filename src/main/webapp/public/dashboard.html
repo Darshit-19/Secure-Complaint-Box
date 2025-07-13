@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<title>Admin Dashboard</title>
+
+<!-- Tailwind CSS -->
+<link rel="stylesheet" href="/SecureComplaintBox/public/css/tailwind.css">
+<script defer src="/SecureComplaintBox/public/js/dashboard.js"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-indigo-100">
+	<!-- Remove header and footer for admin dashboard, keep only dashboard content -->
+
+	<div class="container mx-auto px-6 py-8">
+		<!-- Header -->
+		<div class="bg-white border border-gray-300 shadow-xl rounded-2xl p-6 mb-6">
+			<div class="flex justify-between items-center">
+				<div>
+					<h1 class="text-3xl font-bold text-indigo-700">Admin Dashboard</h1>
+					<p class="text-gray-600 mt-1">Complaints for <span id="orgId" class="font-semibold"></span></p>
+				</div>
+				<div class="flex space-x-3">
+					<a href="#" id="backToOrg" 
+					   class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition duration-300">
+						← Back to Org Home
+					</a>
+					<button onclick="logout()" 
+					        class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-300">
+						Logout
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Complaints Table -->
+		<div class="bg-white border border-gray-300 shadow-xl rounded-2xl p-6">
+			<div class="flex justify-between items-center mb-6">
+				<h2 class="text-xl font-semibold text-gray-800">Complaints</h2>
+				<div id="loading" class="hidden">
+					<span class="text-indigo-600">⏳ Loading complaints...</span>
+				</div>
+			</div>
+
+			<!-- Table -->
+			<div class="overflow-x-auto">
+				<table class="w-full border-collapse">
+					<thead>
+						<tr class="bg-gray-50 border-b border-gray-200">
+							<th class="text-left p-6 font-semibold text-gray-700">Reference Code</th>
+							<th class="text-left p-6 font-semibold text-gray-700">Type</th>
+							<th class="text-left p-6 font-semibold text-gray-700">Status</th>
+							<th class="text-left p-6 font-semibold text-gray-700">Date / Time</th>
+							<th class="text-left p-6 font-semibold text-gray-700 w-48">Actions</th>
+						</tr>
+					</thead>
+					<tbody id="complaintsTableBody">
+						<!-- Complaints will be loaded here -->
+					</tbody>
+				</table>
+			</div>
+
+			<!-- Empty State -->
+			<div id="emptyState" class="hidden text-center py-12">
+				<div class="text-gray-500">
+					<p class="text-lg">No complaints yet.</p>
+					<p class="text-sm mt-2">Complaints will appear here once submitted.</p>
+				</div>
+			</div>
+
+			<!-- Error State -->
+			<div id="errorState" class="hidden text-center py-12">
+				<div class="text-red-600">
+					<p class="text-lg">Error loading complaints.</p>
+					<button onclick="loadComplaints()" 
+					        class="mt-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300">
+						Try Again
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Toast Message -->
+	<div id="toast" class="hidden fixed top-4 right-4 bg-white border border-gray-300 shadow-lg rounded-lg p-4 z-50">
+		<p class="text-sm font-medium"></p>
+	</div>
+
+	<script>
+		function logout() {
+			if (confirm('Are you sure you want to logout?')) {
+				// Call logout servlet to properly clear session
+				fetch('/SecureComplaintBox/logout', {
+					method: 'GET',
+					credentials: 'same-origin'
+				}).then(() => {
+					// Clear any local storage or session storage
+					localStorage.clear();
+					sessionStorage.clear();
+					
+					// Redirect to main index page
+					window.location.replace('/SecureComplaintBox/public/index.html');
+				}).catch(() => {
+					// Fallback if servlet call fails
+					window.location.replace('/SecureComplaintBox/public/index.html');
+				});
+			}
+		}
+
+		function showToast(message, type = 'info') {
+			const toast = document.getElementById('toast');
+			const toastText = toast.querySelector('p');
+			
+			toastText.textContent = message;
+			toast.className = `fixed top-4 right-4 bg-white border border-gray-300 shadow-lg rounded-lg p-4 z-50`;
+			
+			if (type === 'success') {
+				toast.classList.add('border-green-500');
+				toastText.classList.add('text-green-600');
+			} else if (type === 'error') {
+				toast.classList.add('border-red-500');
+				toastText.classList.add('text-red-600');
+			}
+			
+			toast.classList.remove('hidden');
+			
+			setTimeout(() => {
+				toast.classList.add('hidden');
+			}, 3000);
+		}
+
+		// Prevent back button access after logout
+		window.addEventListener('pageshow', function(event) {
+			if (event.persisted) {
+				// Page was loaded from cache (back button)
+				window.location.replace('/SecureComplaintBox/public/index.html');
+			}
+		});
+
+		// Additional protection against browser navigation
+		window.addEventListener('beforeunload', function() {
+			// Clear session data when leaving the page
+			sessionStorage.clear();
+		});
+
+		// Check authentication status periodically
+		setInterval(function() {
+			fetch('/SecureComplaintBox/dashboard', {
+				method: 'HEAD',
+				credentials: 'same-origin'
+			}).catch(() => {
+				// If request fails, user might be logged out
+				window.location.replace('/SecureComplaintBox/public/index.html');
+			});
+		}, 30000); // Check every 30 seconds
+	</script>
+</body>
+</html> 

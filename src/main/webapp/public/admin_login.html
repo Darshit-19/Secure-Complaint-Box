@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<title>Admin Login</title>
+
+<!-- Tailwind CSS -->
+<link rel="stylesheet" href="/SecureComplaintBox/public/css/tailwind.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script defer src="/SecureComplaintBox/public/js/admin_login.js"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-indigo-100 flex flex-col min-h-screen">
+    <!-- Header: full width -->
+    <header class="bg-white shadow-lg border-b border-indigo-200 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-2">
+                <span class="text-xl font-bold text-indigo-700 flex items-center gap-2">
+                    <i class="fas fa-lock text-indigo-600"></i>
+                    Secure Complaint Box
+                </span>
+            </div>
+        </div>
+    </header>
+    <!-- Main content: centered form -->
+    <main class="flex-grow flex items-center justify-center p-6">
+        <div class="w-full max-w-xl bg-white border border-gray-300 shadow-xl rounded-2xl p-8 space-y-6 animate-fade-in-down">
+            <h1 class="text-3xl font-bold text-center text-indigo-700">Admin Login</h1>
+            <form id="adminLoginForm" class="space-y-5 text-gray-700">
+                <!-- Organization ID -->
+                <div>
+                    <label class="block font-semibold mb-1">Organization ID</label> 
+                    <input name="org_id" type="text" required placeholder="Enter your organization ID" class="w-full border border-gray-400 bg-gray-50 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <!-- Email -->
+                <div>
+                    <label class="block font-semibold mb-1">Email</label> 
+                    <input name="email" type="email" required placeholder="Enter your admin email" class="w-full border border-gray-400 bg-gray-50 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <!-- Password -->
+                <div>
+                    <label class="block font-semibold mb-1">Password</label> 
+                    <input name="password" type="password" required placeholder="Enter your password" class="w-full border border-gray-400 bg-gray-50 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <!-- Login Button -->
+                <button type="submit" class="w-full py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition duration-300">Login</button>
+                <!-- Toast Message -->
+                <p id="toast" class="hidden text-center font-medium mt-2"></p>
+            </form>
+        </div>
+    </main>
+    <!-- Footer: full width -->
+    <footer class="bg-gray-900 text-white py-6 mt-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400 text-base">© 2024 Secure Complaint Box. All rights reserved.</p>
+        </div>
+    </footer>
+
+	<!-- Animation Style -->
+	<style>
+.animate-fade-in-down {
+	animation: fadeInDown 0.5s ease-out both;
+}
+
+@keyframes fadeInDown {
+	from { 
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+</style>
+</body>
+</html> 

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Organization Created - Secure Complaint Box</title>
+    <link rel="stylesheet" href="/SecureComplaintBox/public/css/tailwind.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .success-icon {
+            animation: bounce 0.6s ease;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .copy-btn {
+            transition: all 0.2s ease;
+        }
+        .copy-btn:hover {
+            transform: scale(1.1);
+        }
+        .info-box {
+            transition: all 0.2s ease;
+        }
+        .info-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .action-btn {
+            transition: all 0.2s ease;
+        }
+        .action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .header-container {
+            height: 64px;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-indigo-100">
+    <!-- Consistent Header -->
+    <header class="bg-white shadow-lg border-b border-indigo-200 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <span class="text-xl font-bold text-indigo-700 flex items-center gap-2">
+                    <i class="fas fa-lock text-indigo-600"></i>
+                    Secure Complaint Box
+                </span>
+                
+            </div>
+        </div>
+    </header>
+
+    <main class="flex justify-center items-center px-4 py-8">
+        <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-8 border border-gray-200 text-center">
+            <!-- Success Icon -->
+            <div class="success-icon bg-green-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-check text-green-600 text-xl"></i>
+            </div>
+            
+            <!-- Success Message -->
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">Organization Created Successfully!</h2>
+            <p class="text-gray-600 mb-6">Your organization's secure complaint portal is now ready to use.</p>
+            
+            <!-- Organization ID Box -->
+            <div class="mb-5">
+                <label class="block font-semibold text-gray-700 mb-2">Organization ID</label>
+                <div class="info-box bg-gray-50 border border-gray-200 rounded-lg p-3 flex items-center justify-center gap-2">
+                    <input type="text" id="orgIdInput" readonly class="flex-1 bg-transparent border-none outline-none text-center text-indigo-600 text-sm font-mono" value="">
+                    <button id="copyOrgIdBtn" class="copy-btn text-indigo-600 hover:text-indigo-800 p-1 rounded" title="Copy Organization ID">
+                        <i class="far fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Employee Link Box -->
+            <div class="mb-6">
+                <label class="block font-semibold text-gray-700 mb-2">Employee Complaint Form Link</label>
+                <div class="info-box bg-gray-50 border border-gray-200 rounded-lg p-3 flex items-center justify-center gap-2">
+                    <input type="text" id="empUrlInput" readonly class="flex-1 bg-transparent border-none outline-none text-center text-indigo-600 text-sm font-mono" value="">
+                    <button id="copyEmpLinkBtn" class="copy-btn text-indigo-600 hover:text-indigo-800 p-1 rounded" title="Copy link">
+                        <i class="far fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="flex flex-col gap-3 mt-6">
+                <a id="adminDashboardBtn" href="#" class="action-btn py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-all">
+                    Go to Admin Dashboard
+                </a>
+                <a href="/SecureComplaintBox/public/index.html" class="action-btn py-3 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition-all">
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Consistent Footer -->
+    <footer class="bg-gray-900 text-white py-6 mt-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400">© 2024 Secure Complaint Box. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const orgId = urlParams.get('org_id');
+        const empUrl = urlParams.get('emp_url');
+        
+        if (orgId) {
+            document.getElementById('orgIdInput').value = orgId;
+            document.getElementById('adminDashboardBtn').href = `/SecureComplaintBox/${orgId}/admin`;
+        }
+        if (empUrl) {
+            document.getElementById('empUrlInput').value = empUrl;
+        }
+        
+        // Copy Organization ID functionality
+        const copyOrgIdBtn = document.getElementById('copyOrgIdBtn');
+        if (copyOrgIdBtn) {
+            copyOrgIdBtn.addEventListener('click', function() {
+                const orgId = document.getElementById('orgIdInput').value;
+                navigator.clipboard.writeText(orgId).then(function() {
+                    copyOrgIdBtn.innerHTML = '<i class="fas fa-check text-green-500"></i>';
+                    setTimeout(() => {
+                        copyOrgIdBtn.innerHTML = '<i class="far fa-copy"></i>';
+                    }, 1500);
+                });
+            });
+        }
+
+        // Copy Employee Link functionality
+        const copyEmpLinkBtn = document.getElementById('copyEmpLinkBtn');
+        if (copyEmpLinkBtn) {
+            copyEmpLinkBtn.addEventListener('click', function() {
+                const empUrl = document.getElementById('empUrlInput').value;
+                navigator.clipboard.writeText(empUrl).then(function() {
+                    copyEmpLinkBtn.innerHTML = '<i class="fas fa-check text-green-500"></i>';
+                    setTimeout(() => {
+                        copyEmpLinkBtn.innerHTML = '<i class="far fa-copy"></i>';
+                    }, 1500);
+                });
+            });
+        }
+    </script>
+</body>
+</html>

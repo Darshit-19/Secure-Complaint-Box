@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<title>Secure Complaint Box - Home</title>
+
+<!-- Tailwind CSS -->
+<link rel="stylesheet" href="/SecureComplaintBox/public/css/tailwind.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-indigo-100 font-sans text-gray-800">
+    <!-- Header (Updated to match your requested format) -->
+    <header class="bg-white shadow-lg border-b border-indigo-200 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <span class="text-xl font-bold text-indigo-700 flex items-center gap-2">
+                    <i class="fas fa-lock text-indigo-600"></i>
+                    Secure Complaint Box
+                </span>
+                
+                <!-- Right: Admin Login as a button -->
+                <a href="/SecureComplaintBox/public/admin_login.html"
+                   class="text-indigo-600 font-medium hover:underline hover:text-indigo-800 transition">
+                    Admin Login
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Hero Section -->
+        <section class="flex flex-col items-center text-center mt-16 mb-16 sm:mt-20 sm:mb-20">
+            <h2 class="text-4xl font-bold text-gray-900 mb-6 sm:mb-8 mt-2 sm:mt-4">
+                Welcome to Secure Complaint Box
+            </h2>
+            <p class="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto mb-2 sm:mb-4">
+                Create your organization's secure complaint portal and start receiving confidential complaints from your employees.<br>
+                Your privacy and security are our top priorities.
+            </p>
+        </section>
+
+        <!-- Feature Cards -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 mb-14">
+            <!-- Create Organization Card -->
+            <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-200 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                <div class="text-center flex flex-col items-center">
+                    <div class="bg-indigo-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-building text-xl text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Create Organization</h3>
+                    <p class="text-gray-600 mb-4 text-sm">
+                        Set up your organization's secure complaint portal. Get your unique organization ID and start receiving complaints.
+                    </p>
+                    <a href="/SecureComplaintBox/public/signup.html"
+                       class="inline-block bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-indigo-700 transition duration-300">
+                        Create Now
+                    </a>
+                </div>
+            </div>
+
+            <!-- Track Complaint Card -->
+            <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-200 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                <div class="text-center flex flex-col items-center">
+                    <div class="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-search text-xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Track Complaint</h3>
+                    <p class="text-gray-600 mb-4 text-sm">
+                        Track the status of your submitted complaint using your reference code and organization ID.
+                    </p>
+                    <a href="/SecureComplaintBox/public/track_complaint.html"
+                       class="inline-block bg-green-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-green-700 transition duration-300">
+                        Track Status
+                    </a>
+                </div>
+            </div>
+
+            <!-- Submit Complaint Card -->
+            <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-200 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                <div class="text-center flex flex-col items-center">
+                    <div class="bg-yellow-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-edit text-xl text-yellow-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Submit Complaint</h3>
+                    <p class="text-gray-600 mb-4 text-sm">
+                        Submit a new complaint securely and anonymously to your organization.
+                    </p>
+                    <a href="/SecureComplaintBox/public/submit_complaint.html"
+                       class="inline-block bg-yellow-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-yellow-700 transition duration-300">
+                        Submit Now
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features & Security Section (Compact) -->
+        <section class="bg-white rounded-2xl shadow-xl p-6 sm:p-8 border border-gray-200 mb-10">
+            <h3 class="text-xl sm:text-2xl font-bold text-indigo-900 mb-6 text-center">Why Choose Secure Complaint Box?</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 text-center">
+                <div class="flex flex-col items-center">
+                    <i class="fas fa-lock text-lg sm:text-xl text-indigo-600 mb-2"></i>
+                    <span class="font-semibold text-gray-900 text-sm mb-1">End-to-End Encryption</span>
+                    <span class="text-xs text-gray-600">AES for privacy & security</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i class="fas fa-user-secret text-lg sm:text-xl text-indigo-600 mb-2"></i>
+                    <span class="font-semibold text-gray-900 text-sm mb-1">Anonymous Submission</span>
+                    <span class="text-xs text-gray-600">Submit complaints anonymously</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i class="fas fa-key text-lg sm:text-xl text-indigo-600 mb-2"></i>
+                    <span class="font-semibold text-gray-900 text-sm mb-1">Strong Passwords</span>
+                    <span class="text-xs text-gray-600">bcrypt password hashing</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i class="fas fa-chart-line text-lg sm:text-xl text-indigo-600 mb-2"></i>
+                    <span class="font-semibold text-gray-900 text-sm mb-1">Real-time Tracking</span>
+                    <span class="text-xs text-gray-600">Track complaint status</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-6 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-gray-400">
+                    © 2024 Secure Complaint Box. All rights reserved.
+                </p>
+                <p class="text-gray-500 text-sm mt-2">
+                    Built with security and privacy in mind
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add animation classes to elements
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.grid > div');
+            setTimeout(() => {
+                cards.forEach((card, index) => {
+                    card.classList.add('animate-fade-in-up', `animate-delay-${index + 1}`);
+                });
+            }, 100);
+        });
+    </script>
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out both;
+        }
+        .animate-delay-1 { animation-delay: 0.1s; }
+        .animate-delay-2 { animation-delay: 0.2s; }
+        .animate-delay-3 { animation-delay: 0.3s; }
+    </style>
+</body>
+</html>

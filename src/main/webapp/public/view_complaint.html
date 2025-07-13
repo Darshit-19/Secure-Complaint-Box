@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Complaint Details - Secure Complaint Box</title>
+    
+    <!-- Tailwind CSS -->
+<link rel="stylesheet" href="/SecureComplaintBox/public/css/tailwind.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-indigo-100">
+    <!-- Header -->
+    <header class="bg-white shadow-lg border-b border-indigo-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-2 py-6">
+                <span class="text-xl font-bold text-indigo-700 flex items-center gap-2">
+                    <i class="fas fa-lock text-indigo-600"></i>
+                    Secure Complaint Box
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-200">
+            <!-- Header -->
+            <div class="border-b border-gray-200 pb-6 mb-6">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">
+                    <i class="fas fa-file-alt text-indigo-600 mr-3"></i>
+                    Complaint Details
+                </h2>
+                <p class="text-gray-600">Reference: <span id="refCode" class="font-mono font-semibold text-indigo-600"></span></p>
+            </div>
+
+            <!-- Complaint Information -->
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <!-- Basic Details -->
+                <div class="space-y-4">
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-2">Complaint Type</label>
+                        <div class="bg-gray-50 border border-gray-300 rounded-lg p-3">
+                            <span id="complaintType" class="text-gray-900 font-medium"></span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-2">Status</label>
+                        <div class="bg-gray-50 border border-gray-300 rounded-lg p-3">
+                            <span id="complaintStatus" class="px-3 py-1 text-xs font-semibold rounded-full"></span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-2">Submitted On</label>
+                        <div class="bg-gray-50 border border-gray-300 rounded-lg p-3">
+                            <span id="submittedDate" class="text-gray-900"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="space-y-4">
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-2">Contact Information</label>
+                        <div class="bg-gray-50 border border-gray-300 rounded-lg p-3">
+                            <span id="contactInfo" class="text-gray-900"></span>
+                        </div>
+                    </div>
+                    
+
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-8">
+                <label class="block font-semibold text-gray-700 mb-3">Description</label>
+                <div class="bg-gray-50 border border-gray-300 rounded-lg p-4">
+                    <pre id="description" class="text-gray-900 whitespace-pre-wrap font-sans"></pre>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex flex-wrap gap-4 pt-6 border-t border-gray-200">
+                <button onclick="updateStatus()" 
+                        class="bg-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-green-700 transition duration-300">
+                    <i class="fas fa-check mr-2"></i>Update Status
+                </button>
+                <a href="/SecureComplaintBox/public/dashboard.html" class="bg-gray-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-gray-700 transition duration-300">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Message -->
+    <div id="toast" class="hidden fixed top-4 right-4 bg-white border border-gray-300 shadow-lg rounded-lg p-4 z-50">
+        <p class="text-sm font-medium"></p>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Get complaint details from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const ref = urlParams.get('ref');
+        
+        if (!ref) {
+            showToast('No complaint reference provided', 'error');
+            setTimeout(() => goBack(), 2000);
+        } else {
+            loadComplaintDetails(ref);
+        }
+
+        async function loadComplaintDetails(refCode) {
+            try {
+                const response = await fetch(`/SecureComplaintBox/viewComplaint?ref=${encodeURIComponent(refCode)}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.error) {
+                        showToast(data.error, 'error');
+                        return;
+                    }
+                    document.getElementById('refCode').textContent = data.ref;
+                    document.getElementById('complaintType').textContent = data.type;
+                    const statusSpan = document.getElementById('complaintStatus');
+                    statusSpan.textContent = data.status;
+                    statusSpan.className = `px-3 py-1 text-xs font-semibold rounded-full ${
+                        data.status === 'resolved' ? 'bg-green-100 text-green-800' : 
+                        data.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 
+                        'bg-gray-100 text-gray-800'
+                    }`;
+                    document.getElementById('submittedDate').textContent = data.date;
+                    document.getElementById('contactInfo').textContent = data.contact_info || 'Anonymous';
+                    document.getElementById('description').textContent = data.desc;
+                } else {
+                    showToast('Failed to load complaint details', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading complaint details:', error);
+                showToast('Error loading complaint details', 'error');
+            }
+        }
+
+        async function updateStatus() {
+            if (!confirm('Are you sure you want to update the status of this complaint?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/SecureComplaintBox/updateStatus?ref=${encodeURIComponent(ref)}`);
+                
+                if (response.ok) {
+                    showToast('Status updated successfully!', 'success');
+                    // Reload the page to show updated status
+                    setTimeout(() => loadComplaintDetails(ref), 1000);
+                } else {
+                    showToast('Failed to update status', 'error');
+                }
+            } catch (error) {
+                console.error('Error updating status:', error);
+                showToast('Error updating status', 'error');
+            }
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const toastText = toast.querySelector('p');
+            
+            toastText.textContent = message;
+            toast.className = `fixed top-4 right-4 bg-white border border-gray-300 shadow-lg rounded-lg p-4 z-50`;
+            
+            if (type === 'success') {
+                toast.classList.add('border-green-500');
+                toastText.classList.add('text-green-600');
+            } else if (type === 'error') {
+                toast.classList.add('border-red-500');
+                toastText.classList.add('text-red-600');
+            }
+            
+            toast.classList.remove('hidden');
+            
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+    </script>
+
+    <!-- Animation Styles -->
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out both;
+        }
+    </style>
+</body>
+</html> 
