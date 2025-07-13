@@ -42,6 +42,7 @@ RUN wget -O /opt/tomcat/lib/jbcrypt-0.4.jar \
 
 # Copy web resources to Tomcat
 RUN cp -r src/main/webapp/public /opt/tomcat/webapps/SecureComplaintBox/
+RUN mkdir -p /opt/tomcat/webapps/SecureComplaintBox/WEB-INF/
 RUN cp src/main/webapp/WEB-INF/web.xml /opt/tomcat/webapps/SecureComplaintBox/WEB-INF/
 
 # Copy JAR files to WEB-INF/lib
