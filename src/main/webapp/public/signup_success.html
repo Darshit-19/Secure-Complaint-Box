@@ -118,7 +118,9 @@
             document.getElementById('adminDashboardBtn').href = `/SecureComplaintBox/${orgId}/admin`;
         }
         if (empUrl) {
-            document.getElementById('empUrlInput').value = empUrl;
+            // Ensure the link is always a full URL
+            const fullEmpUrl = empUrl.startsWith('http') ? empUrl : window.location.origin + empUrl;
+            document.getElementById('empUrlInput').value = fullEmpUrl;
         }
         
         // Copy Organization ID functionality
