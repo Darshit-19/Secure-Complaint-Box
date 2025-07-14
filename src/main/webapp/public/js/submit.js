@@ -1,3 +1,27 @@
+// Auto-fill organization ID from URL if present
+document.addEventListener('DOMContentLoaded', function() {
+  const pathParts = location.pathname.split('/');
+  const orgIdFromUrl = pathParts[2]; // Get org ID from URL like /SecureComplaintBox/org-id/submit
+  
+  if (orgIdFromUrl && orgIdFromUrl !== 'submit' && orgIdFromUrl !== 'public') {
+    const orgIdInput = document.querySelector('input[name="org_id"]');
+    const orgIdHelp = document.getElementById('orgIdHelp');
+    
+    if (orgIdInput) {
+      orgIdInput.value = orgIdFromUrl;
+      orgIdInput.readOnly = true; // Make it read-only since it's auto-filled
+      orgIdInput.classList.add('bg-gray-100'); // Visual indication that it's auto-filled
+      
+      // Show the help message only
+      if (orgIdHelp) {
+        orgIdHelp.classList.remove('hidden');
+      }
+      
+      console.log('Auto-filled organization ID:', orgIdFromUrl);
+    }
+  }
+});
+
 document.getElementById('complaintForm').addEventListener('submit', async (e) => {
   e.preventDefault();
 

@@ -10,6 +10,7 @@
 
 <!-- Tailwind CSS -->
 <link rel="stylesheet" href="/SecureComplaintBox/public/css/tailwind.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script defer src="/SecureComplaintBox/public/js/submit.js"></script>
 </head>
 
@@ -38,6 +39,9 @@
 			<div>
 				<label class="block font-semibold mb-1">Organization ID</label>
 				<input name="org_id" type="text" required placeholder="Enter your organization ID" class="w-full border border-gray-400 bg-gray-50 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+				<p id="orgIdHelp" class="hidden text-sm text-green-600 mt-1">
+					Organization ID auto-filled from your organization's link
+				</p>
 			</div>
 			<!-- Complaint Type -->
 			<div>
@@ -81,6 +85,15 @@
 			<!-- Toast Message -->
 			<p id="toast" class="hidden text-center font-medium mt-2"></p>
 		</form>
+
+		<!-- Back to Home Button -->
+		<div class="mt-4 text-center">
+			<a href="/SecureComplaintBox/public/index.html" 
+			   class="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium">
+				<i class="fas fa-arrow-left mr-2"></i>
+				Back to Home
+			</a>
+		</div>
 
 
 	</div>

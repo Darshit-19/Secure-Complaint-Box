@@ -51,8 +51,9 @@ async function loadComplaints() {
         // Set organization ID
         if (data.org_id) {
             document.getElementById('orgId').textContent = data.org_id;
-            // Set up back to org home link
-            document.getElementById('backToOrg').href = `/SecureComplaintBox/public/signup_success.html?org_id=${data.org_id}&emp_url=${encodeURIComponent('/SecureComplaintBox/' + data.org_id + '/submit')}`;
+            // Set up back to org home link with full URL
+            const fullEmpUrl = window.location.origin + '/SecureComplaintBox/' + data.org_id + '/submit';
+            document.getElementById('backToOrg').href = `/SecureComplaintBox/public/signup_success.html?org_id=${data.org_id}&emp_url=${encodeURIComponent(fullEmpUrl)}`;
             document.getElementById('backToOrg').textContent = '← Back to Org Home';
         }
 

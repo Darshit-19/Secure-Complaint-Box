@@ -138,9 +138,22 @@ public class RegisterOrgServlet extends HttpServlet {
         
         // Redirect to the HTML success page with clean parameters
         String ctx = request.getContextPath();
+        
+        // Generate full URL for employee complaint form
+        String scheme = request.getScheme();
+        String serverName = request.getServerName();
+        int serverPort = request.getServerPort();
+        String fullEmpUrl;
+        
+        if (serverPort == 80 || serverPort == 443) {
+            fullEmpUrl = scheme + "://" + serverName + ctx + "/" + orgId + "/submit";
+        } else {
+            fullEmpUrl = scheme + "://" + serverName + ":" + serverPort + ctx + "/" + orgId + "/submit";
+        }
+        
         String redirectUrl = ctx + "/public/signup_success.html" +
                            "?org_id=" + java.net.URLEncoder.encode(orgId, "UTF-8") +
-                           "&emp_url=" + java.net.URLEncoder.encode(ctx + "/" + orgId + "/submit", "UTF-8");
+                           "&emp_url=" + java.net.URLEncoder.encode(fullEmpUrl, "UTF-8");
         
         response.sendRedirect(redirectUrl);
     }
