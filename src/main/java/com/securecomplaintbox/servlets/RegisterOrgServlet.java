@@ -126,6 +126,8 @@ public class RegisterOrgServlet extends HttpServlet {
     private void forwardToSuccess(HttpServletRequest request, HttpServletResponse response, String orgId)
             throws ServletException, IOException {
         
+        System.out.println("DEBUG: Entering forwardToSuccess method.");
+
         String ctx = request.getContextPath();
         String scheme = request.getScheme();
         String serverName = request.getServerName();
@@ -138,9 +140,13 @@ public class RegisterOrgServlet extends HttpServlet {
             fullEmpUrl = scheme + "://" + serverName + ":" + serverPort + ctx + "/" + orgId + "/submit";
         }
         
+        System.out.println("DEBUG: Generated Full Employee URL: " + fullEmpUrl);
+
         String redirectUrl = ctx + "/public/signup_success.html" +
                            "?org_id=" + java.net.URLEncoder.encode(orgId, "UTF-8") +
                            "&emp_url=" + java.net.URLEncoder.encode(fullEmpUrl, "UTF-8");
+
+        System.out.println("DEBUG: Redirecting to: " + redirectUrl);
         
         response.sendRedirect(redirectUrl);
     }
