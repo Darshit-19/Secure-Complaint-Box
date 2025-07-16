@@ -20,7 +20,6 @@ public class RegisterOrgServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Validate input parameters
         String orgName = request.getParameter("org_name");
         String adminEmail = request.getParameter("admin_email");
         String password = request.getParameter("password");
@@ -30,7 +29,6 @@ public class RegisterOrgServlet extends HttpServlet {
             return;
         }
 
-        // Clean and validate data
         orgName = orgName.trim();
         adminEmail = adminEmail.trim().toLowerCase();
 
@@ -44,22 +42,18 @@ public class RegisterOrgServlet extends HttpServlet {
             return;
         }
 
-        // Generate organization ID
         String orgId = generateOrgId(orgName);
         if (orgId == null) {
             handleError(request, response, "Invalid organization name. Please use only letters, numbers, and spaces.");
             return;
         }
 
-        // Attempt to create organization
         try {
             if (createOrganization(orgId, orgName, adminEmail, password)) {
-            	HttpSession oldSession = request.getSession(false);
-            	if (oldSession != null) {
-            	    oldSession.invalidate();
-            	}
-
-
+                HttpSession oldSession = request.getSession(false);
+                if (oldSession != null) {
+                    oldSession.invalidate();
+                }
                 forwardToSuccess(request, response, orgId);
             } else {
                 handleError(request, response, "Failed to create organization. Please try again.");
@@ -92,7 +86,6 @@ public class RegisterOrgServlet extends HttpServlet {
 
     private String generateOrgId(String orgName) {
         try {
-            // Generate URL-safe org-ID slug
             String baseSlug = orgName.toLowerCase(Locale.ROOT)
                                      .replaceAll("[^a-z0-9]+", "-")
                                      .replaceAll("(^-|-$)", "");
@@ -102,21 +95,18 @@ public class RegisterOrgServlet extends HttpServlet {
             }
             
             String randomPart = UUID.randomUUID().toString().substring(0, 4).toLowerCase();
-            return baseSlug + "-" + randomPart; // e.g., abc-corp-7h9k
+            return baseSlug + "-" + randomPart;
         } catch (Exception e) {
             log("Error generating org ID", e);
             return null;
         }
     }
 
-    private boolean createOrganization(String orgId, String orgName, String adminEmail, String password) 
+    private boolean createOrganization(String orgId, String orgName, String adminEmail, String password)
             throws SQLException {
         
         try (Connection conn = DBConnection.getConnection()) {
-            // Hash password with BCrypt
             String hashedPassword = PasswordUtil.hash(password);
-
-            // Insert organization row
             String sql = """
                          INSERT INTO organizations
                            (org_id, org_name, admin_email, admin_pass_hash)
@@ -133,13 +123,10 @@ public class RegisterOrgServlet extends HttpServlet {
         }
     }
 
-    private void forwardToSuccess(HttpServletRequest request, HttpServletResponse response, String orgId) 
+    private void forwardToSuccess(HttpServletRequest request, HttpServletResponse response, String orgId)
             throws ServletException, IOException {
         
-        // Redirect to the HTML success page with clean parameters
         String ctx = request.getContextPath();
-        
-        // Generate full URL for employee complaint form
         String scheme = request.getScheme();
         String serverName = request.getServerName();
         int serverPort = request.getServerPort();
@@ -158,16 +145,13 @@ public class RegisterOrgServlet extends HttpServlet {
         response.sendRedirect(redirectUrl);
     }
 
-    private void handleError(HttpServletRequest request, HttpServletResponse response, String message) 
+    private void handleError(HttpServletRequest request, HttpServletResponse response, String message)
             throws ServletException, IOException {
-        // Check if this is an AJAX request or regular form submission
         String contentType = request.getContentType();
         if (contentType != null && contentType.contains("application/x-www-form-urlencoded")) {
-            // Regular form submission - redirect back to signup page with error
-            response.sendRedirect(request.getContextPath() + "/public/signup.html?error=" + 
+            response.sendRedirect(request.getContextPath() + "/public/signup.html?error=" +
                                 java.net.URLEncoder.encode(message, "UTF-8"));
         } else {
-            // AJAX request - return error as text
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.setContentType("text/plain");
             response.getWriter().write(message);
