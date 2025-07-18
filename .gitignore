@@ -1,13 +1,13 @@
 # Java
 *.class
 *.jar
-*.war
+#*.war
 *.ear
 *.log
 
 # Build directories
 build/
-target/
+#target/
 out/
 
 # IDE files
