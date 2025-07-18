@@ -1,13 +1,13 @@
 # Java
 *.class
 *.jar
-#*.war
+*.war 
 *.ear
 *.log
 
 # Build directories
 build/
-#target/
+target/
 out/
 
 # IDE files
@@ -42,3 +42,6 @@ package-lock.json
 # Temporary files
 *.tmp
 *.temp 
+
+
+can i add this as my project is now working fine
