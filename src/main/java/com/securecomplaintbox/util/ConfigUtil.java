@@ -40,20 +40,20 @@ public class ConfigUtil {
     public static String getDatabasePassword() {
         return System.getenv("DB_PASSWORD") != null ? 
                System.getenv("DB_PASSWORD") : 
-               properties.getProperty("db.password", "root123");
+               properties.getProperty("db.password", "CHANGEME");
     }
     
     // Email Configuration
     public static String getEmailUser() {
         return System.getenv("EMAIL_USER") != null ? 
                System.getenv("EMAIL_USER") : 
-               properties.getProperty("email.user", "hairiyadarshit@gmail.com");
+               properties.getProperty("email.user", "CHANGEME");
     }
     
     public static String getEmailPassword() {
         return System.getenv("EMAIL_PASSWORD") != null ? 
                System.getenv("EMAIL_PASSWORD") : 
-               properties.getProperty("email.password", "otre saxp avya gpum");
+               properties.getProperty("email.password", "CHANGEME");
     }
     
     public static String getSmtpHost() {
@@ -72,7 +72,7 @@ public class ConfigUtil {
     public static String getEncryptionSecret() {
         return System.getenv("ENCRYPTION_SECRET") != null ? 
                System.getenv("ENCRYPTION_SECRET") : 
-               properties.getProperty("encryption.secret", "S3cureCompl@int!");
+               properties.getProperty("encryption.secret", "CHANGEME");
     }
     
     // Environment check

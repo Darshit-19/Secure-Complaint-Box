@@ -3,19 +3,19 @@
 
 # Database Configuration
 db.url=jdbc:mysql://localhost:3306/secure_complaint_box
-db.user=your_db_username
-db.password=your_db_password
+db.user=root
+db.password=CHANGEME
 
 # Email Configuration (Gmail App Password)
-email.user=your-email@gmail.com
-email.password=your_gmail_app_password
+email.user=CHANGEME
+email.password=CHANGEME
 
 # SMTP Configuration
 smtp.host=smtp.gmail.com
 smtp.port=587
 
 # Encryption Configuration (Must be exactly 16 characters for AES)
-encryption.secret=YourSecretKey16
+encryption.secret=CHANGEME
 
 # Environment
 environment=development 
