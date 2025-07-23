@@ -1,93 +1,59 @@
 package com.securecomplaintbox.util;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
 public class ConfigUtil {
-    
-    private static Properties properties;
-    
-    static {
-        loadProperties();
-    }
-    
-    private static void loadProperties() {
-        properties = new Properties();
-        try (InputStream input = ConfigUtil.class.getClassLoader()
-                .getResourceAsStream("application.properties")) {
-            if (input != null) {
-                properties.load(input);
-            }
-        } catch (IOException e) {
-            System.err.println("Error loading application.properties: " + e.getMessage());
+
+    private static String getEnv(String key) {
+        String value = System.getenv(key);
+        if (value == null || value.isEmpty()) {
+            throw new RuntimeException("Missing required environment variable: " + key);
         }
+        return value;
     }
-    
-    // Database Configuration
+
+    // ---- Database Configuration ----
     public static String getDatabaseUrl() {
-        return System.getenv("DB_URL") != null ? 
-               System.getenv("DB_URL") : 
-               properties.getProperty("db.url", "jdbc:mysql://localhost:3306/secure_complaint_box");
+        return getEnv("DB_URL");
     }
-    
+
     public static String getDatabaseUser() {
-        return System.getenv("DB_USER") != null ? 
-               System.getenv("DB_USER") : 
-               properties.getProperty("db.user", "root");
+        return getEnv("DB_USER");
     }
-    
+
     public static String getDatabasePassword() {
-        return System.getenv("DB_PASSWORD") != null ? 
-               System.getenv("DB_PASSWORD") : 
-               properties.getProperty("db.password", "CHANGEME");
+        return getEnv("DB_PASSWORD");
     }
-    
-    // Email Configuration
+
+    // ---- Email Configuration ----
     public static String getEmailUser() {
-        return System.getenv("EMAIL_USER") != null ? 
-               System.getenv("EMAIL_USER") : 
-               properties.getProperty("email.user", "CHANGEME");
+        return getEnv("EMAIL_USER");
     }
-    
+
     public static String getEmailPassword() {
-        return System.getenv("EMAIL_PASSWORD") != null ? 
-               System.getenv("EMAIL_PASSWORD") : 
-               properties.getProperty("email.password", "CHANGEME");
+        return getEnv("EMAIL_PASSWORD");
     }
-    
+
     public static String getSmtpHost() {
-        return System.getenv("SMTP_HOST") != null ? 
-               System.getenv("SMTP_HOST") : 
-               properties.getProperty("smtp.host", "smtp.gmail.com");
+        return getEnv("SMTP_HOST");
     }
-    
+
     public static String getSmtpPort() {
-        return System.getenv("SMTP_PORT") != null ? 
-               System.getenv("SMTP_PORT") : 
-               properties.getProperty("smtp.port", "587");
+        return getEnv("SMTP_PORT");
     }
-    
-    // Encryption Configuration
+
+    // ---- Encryption Configuration ----
     public static String getEncryptionSecret() {
-        return System.getenv("ENCRYPTION_SECRET") != null ? 
-               System.getenv("ENCRYPTION_SECRET") : 
-               properties.getProperty("encryption.secret", "CHANGEME");
+        return getEnv("ENCRYPTION_SECRET");
     }
-    
-    // Environment check
+
+    // ---- Environment Type (Optional) ----
     public static boolean isProduction() {
-        String env = System.getenv("ENVIRONMENT");
-        if (env != null) {
-            return "production".equalsIgnoreCase(env);
-        }
-        return "production".equalsIgnoreCase(properties.getProperty("environment", "development"));
+        return "production".equalsIgnoreCase(System.getenv("ENVIRONMENT"));
     }
-    
-    // Debug method to check configuration loading
+
+    // ---- Debug Method ----
     public static void printConfiguration() {
         System.out.println("=== Configuration Debug ===");
-        System.out.println("Environment: " + (isProduction() ? "PRODUCTION" : "DEVELOPMENT"));
+        System.out.println("Environment: " + (isProduction() ? "PRODUCTION" : "UNKNOWN"));
         System.out.println("Database URL: " + getDatabaseUrl());
         System.out.println("Database User: " + getDatabaseUser());
         System.out.println("Email User: " + getEmailUser());
@@ -96,4 +62,4 @@ public class ConfigUtil {
         System.out.println("Encryption Secret Length: " + getEncryptionSecret().length());
         System.out.println("==========================");
     }
-} 
+}
